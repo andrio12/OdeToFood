@@ -1,31 +1,40 @@
 using System;
 using System.Collections.Generic;
-using OdeToFood.Models;
+using System.Linq;
+using OdeToFood.Entities;
 
 namespace OdeToFood.Services
 {
-    public interface IResturantData
+    public interface IRestaurantData
     {
-        IEnumerable<Resturant> GetAll();
+        IEnumerable<Restaurant> GetAll();
+        Restaurant Get(int id);
+
     }
 
-    public class InMemoryResturantData : IResturantData
+    public class InMemoryRestaurantData : IRestaurantData
     {
-        public InMemoryResturantData()
+        public InMemoryRestaurantData()
         {
-            _resturants = new List<Resturant>
+            _resturants = new List<Restaurant>
             {
-                new Resturant { Id = 1, Name = "Jurbangle" },
-                new Resturant { Id = 2, Name = "Cat burgers" },
-                new Resturant { Id = 3, Name = "What is a hat?" }
+                new Restaurant { Id = 1, Name = "Jurbangle" },
+                new Restaurant { Id = 2, Name = "Cat burgers" },
+                new Restaurant { Id = 3, Name = "What is a hat?" }
             };
 
         }
-        public IEnumerable<Resturant> GetAll()
+
+        public Restaurant Get(int id)
+        {
+            return _resturants.FirstOrDefault(r => r.Id == id);
+        }
+
+        public IEnumerable<Restaurant> GetAll()
         {
             return _resturants;
         }
 
-        List<Resturant> _resturants;
+        List<Restaurant> _resturants;
     }
 }
